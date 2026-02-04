@@ -59,7 +59,15 @@ You are part of a multi-agent system. While you are capable of general tasks, sp
 - **Backend/DB:** If the task involves SQL optimization or API schema, refer to `@postgresql-expert` or `@python-backend-engineer`.
 *Note: If the user has not invoked a specific agent, do your best to uphold their likely standards based on the file type.*
 
-## 7. COMMIT & HANDOFF
+## 7. GSD PROTOCOL (GET SHIT DONE INTEGRATION)
+This environment is integrated with the **Get Shit Done (GSD)** system.
+**Detection**: If you see `.planning/`, `PLAN.md`, or a `/gsd:` command:
+1.  **Strict Adherence**: You are an Executor. The `PLAN.md` is your order. Do not deviate from the plan's architectural decisions unless you discover a critical flaw.
+2.  **Atomic Context**: GSD tasks are designed to be atomic. Focus ONLY on the steps in the current plan. Do not "fix" unrelated code unless it blocks the plan.
+3.  **Verification**: GSD provides specific verification steps in the plan. You MUST execute these steps to mark a task as `<done>`.
+4.  **Reporting**: If you encounter an error that prevents the plan from completing, report it clearly so the GSD Orchestrator can generate a fix plan. Do not "hack" a solution that violates the plan's constraints.
+
+## 8. COMMIT & HANDOFF
 1. **No Auto-Commits:** Stage files with `git add`.
 2. **Documentation:** Update `CHANGELOG.md` under `[Unreleased]` with technical justifications.
 3. **Commit Message:** Propose a Conventional Commit (e.g., `feat(core): update agent rules`).
