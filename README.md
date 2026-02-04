@@ -13,6 +13,16 @@ OpenCode enables AI-powered development through configurable agents that underst
 - **Safe Updates:** Automatic backup of existing configurations before syncing
 - **Customizable:** Fork and adapt to your team's specific needs
 
+## ⚡ GSD Integration (New!)
+
+This repository is optimized for use with **Get Shit Done (GSD)** (`npx get-shit-done-cc`), a powerful meta-prompting system for planning and executing complex tasks.
+
+- **Unified Workflow:** Use GSD to plan and track tasks, while OpenCode experts execute the code.
+- **Context-Aware:** Agents are trained to respect GSD's atomic plans (`PLAN.md`).
+- **Safe Syncing:** The updated `sync-config.sh` ensures your GSD installation is preserved.
+
+[👉 **Read the GSD + OpenCode Workflow Guide**](docs/GSD_WORKFLOW.md)
+
 ## 📋 Project Structure
 
 ```
