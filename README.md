@@ -18,24 +18,26 @@ OpenCode enables AI-powered development through configurable agents that underst
 ```
 e-van-opencode/
 ├── .opencode/
-│   └── agents/              # Agent definition files (Markdown)
-│       ├── ui-engineer.md
-│       ├── python-backend-engineer.md
-│       ├── devops-engineer.md
-│       ├── principal-engineer.md
-│       ├── postgresql-expert.md
-│       ├── security-reviewer.md
-│       ├── docker-expert.md
-│       ├── github-actions-expert.md
-│       ├── nextjs-expert.md
-│       ├── astro-expert.md
-│       ├── senior-code-reviewer.md
-│       ├── python-expert.md
-│       ├── javascript-expert.md
-│       ├── refactoring-specialist.md
-│       ├── test-writer.md
-│       ├── bug-hunter.md
-│       └── documentation-expert.md
+│   ├── agents/             # Agent definition files (Markdown)
+│   │   ├── ui-engineer.md
+│   │   ├── python-backend-engineer.md
+│   │   ├── devops-engineer.md
+│   │   ├── principal-engineer.md
+│   │   ├── postgresql-expert.md
+│   │   ├── security-reviewer.md
+│   │   ├── docker-expert.md
+│   │   ├── github-actions-expert.md
+│   │   ├── nextjs-expert.md
+│   │   ├── astro-expert.md
+│   │   ├── senior-code-reviewer.md
+│   │   ├── python-expert.md
+│   │   ├── javascript-expert.md
+│   │   ├── refactoring-specialist.md
+│   │   ├── test-writer.md
+│   │   ├── bug-hunter.md
+│   │   └── documentation-expert.md
+│   └── commands/           # Custom slash commands
+│       └── analyze-context.md
 ├── docs/
 │   └── AGENTS.md           # Main agent rules file
 ├── opencode.json           # OpenCode configuration
@@ -94,6 +96,29 @@ git pull
 # Re-sync configuration
 ./sync-config.sh
 ```
+
+### Commands Reference
+
+#### sync-config.sh
+
+The main command for syncing repository configuration to your local OpenCode config directory (`~/.config/opencode/`).
+
+**What it does:** Copies or creates symlinks for configuration files from this repository to your local OpenCode config directory, including:
+- `opencode.json` → `~/.config/opencode/opencode.json`
+- `docs/AGENTS.md` → `~/.config/opencode/AGENTS.md`
+- `.opencode/agents/*.md` → `~/.config/opencode/agents/`
+
+**When to use it:**
+- After cloning this repository for the first time
+- After pulling latest changes from the remote repository
+- After making customizations to agent definitions or configuration files
+
+**Available options:**
+| Option | Description |
+|--------|-------------|
+| `--symlink` | Use symlinks instead of copying. Automatically keeps OpenCode config in sync with the repository (ideal for active development) |
+| `--no-backup` | Skip creating a backup of existing configuration. Use with caution |
+| `--help` | Display help information and usage examples |
 
 ## ⚙️ Configuration Options
 
@@ -164,6 +189,37 @@ This repository includes 18 specialized agents, each designed for specific devel
 | `test-writer` | subagent | Writes comprehensive, maintainable tests following TDD best practices | Writing tests, test coverage, test architecture |
 | `bug-hunter` | subagent | Systematically identifies and fixes bugs through root cause analysis | Debugging, investigating issues, bug fixes |
 | `documentation-expert` | subagent | Creates clear, comprehensive technical documentation following best practices | Writing docs, API documentation, README files |
+
+## 🎯 Custom Commands
+
+In addition to agents, this repository provides custom slash commands for specialized tasks.
+
+| Command | Description | Use Case |
+|---------|-------------|----------|
+| `@analyze-context` | Deep system analysis to generate `docs/AI_CONTEXT.md` | Understanding a new codebase, when context documentation is missing or outdated, before complex features |
+
+### @analyze-context
+
+Performs a comprehensive system architecture analysis and generates a detailed architectural map in `docs/AI_CONTEXT.md`.
+
+**What it does:**
+- Executes a 3-phase analysis protocol:
+  - **Phase 1: Structural X-Ray** – Identifies modules, entry points, and config resolution
+  - **Phase 2: Data Flow & Logic Mapping** – Analyzes data models, API surface, and key invariants
+  - **Phase 3: Technical Debt & Risk Assessment** – Detects god objects, hidden dependencies, and test gaps
+- Generates or overwrites `docs/AI_CONTEXT.md` with:
+  - Tech stack & versions
+  - High-level architecture pattern
+  - Critical data flows
+  - Key directory map
+  - Developer guide / conventions
+  - Known technical debt / watchlist
+
+**When to use it:**
+- When you need to understand a new codebase
+- When `docs/AI_CONTEXT.md` is missing or outdated
+- Before starting work on a complex feature
+- When the `@refresh-context` command is invoked (this triggers `@analyze-context`)
 
 ## 📖 How It Works
 
