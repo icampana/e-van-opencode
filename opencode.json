@@ -3,5 +3,8 @@
   "instructions": [
     "AGENTS.md",
     "docs/**/*.md"
+  ],
+  "exclude": [
+    ".planning/**"
   ]
 }
