@@ -1,20 +1,72 @@
 # OpenCode Settings Repository
 
-A comprehensive collection of OpenCode settings, custom agents, sub-agents, skills, and commands to share with your team and improve development workflows.
+A comprehensive collection of OpenCode settings designed as a **global configuration** for all your projects, with support for per-project customization.
 
 ## 📋 Overview
 
-This repository provides a structured way to share OpenCode configurations including:
+This repository provides a **global-first approach** to OpenCode configurations:
+
+- **🌍 Global Configuration**: One central config for all your projects
+- **🔄 Stay in Sync**: Update once, applies everywhere
+- **🎯 Per-Project Extensions**: Add project-specific rules when needed
+- **👥 Team Sharing**: Share configurations across your team
+- **📦 Comprehensive**: Agents, sub-agents, skills, and commands included
+
+### What's Included
 
 - **Main AGENTS.md**: Core agent behavior and principles
-- **Custom Agents**: Specialized agents for specific technologies (Python, JavaScript, Documentation)
-- **Sub-Agents**: Focused agents for specialized tasks (Test Writing, Bug Hunting, Refactoring)
-- **Skills**: Reusable capabilities (Code Review, Git Workflow, Debugging)
-- **Commands**: Quick reference guides (Testing, Project Setup, Code Quality)
+- **Custom Agents**: Specialized agents for specific technologies
+- **Sub-Agents**: Focused agents for specialized tasks
+- **Skills**: Reusable capabilities (Code Review, Git, Debugging)
+- **Commands**: Quick reference guides (Testing, Setup, Quality Checks)
 
 ## 🚀 Quick Start
 
-### Using This Repository
+### 1. Install as Global Configuration (Recommended)
+
+Set up once, use everywhere:
+
+```bash
+# Clone the repository
+git clone https://github.com/icampana/e-van-opencode.git
+cd e-van-opencode
+
+# Run global setup
+./setup-global.sh
+```
+
+This installs the configuration to `~/.opencode/` and sets up your environment.
+
+### 2. Apply to Your Projects
+
+For each project:
+
+```bash
+cd /path/to/your/project
+
+# Run project setup helper
+~/.opencode/setup-project.sh
+```
+
+Choose:
+- **Symlink** (recommended): Stays in sync with global config
+- **Copy**: Allows per-project customization
+- **Reference**: Use global without local files
+
+### 3. Install Required Tools (Optional)
+
+```bash
+# Install recommended CLI tools (bat, rg, sd, eza)
+./install-tools.sh
+```
+
+**Learn more:** See [GLOBAL_CONFIG.md](GLOBAL_CONFIG.md) for detailed global configuration guide.
+
+---
+
+### Alternative: Per-Project Setup
+
+If you prefer to copy configurations to individual projects:
 
 1. **Clone or Fork**: Copy this repository to use as a template for your team
 2. **Customize**: Modify the configurations to match your team's needs
@@ -54,16 +106,38 @@ cp -r .github/agents /path/to/your/project/.github/
     └── code-quality-check.md   # Linting and formatting
 ```
 
-## 🎯 What's Included
+## 🌍 Global vs Per-Project Configuration
+
+### Global Configuration (Recommended)
+
+✅ **Benefits:**
+- Update once, applies to all projects
+- Consistent standards across your work
+- Less duplication and maintenance
+- Easy to share with team
+
+📖 **Full Guide:** [GLOBAL_CONFIG.md](GLOBAL_CONFIG.md)
+
+### Per-Project Configuration
+
+✅ **Use when:**
+- Project has unique requirements
+- Working with different teams
+- Need isolation from global changes
+- Client-specific standards
+
+You can also **combine both**: Use global config with project-specific extensions in `AGENTS_PROJECT.md`.
 
 ### Main Agent Configuration (AGENTS.md)
 
-The core agent behavior definition including:
-- Core principles (minimal changes, test-driven, security first)
-- Agent capabilities (analysis, development, validation)
-- Standard workflow (understand, plan, implement, validate, review)
-- Tool usage guidelines
-- Best practices for code changes and testing
+The core agent behavior definition with a Principal Software Architect approach:
+- **Anti-Sycophancy**: Push back against bad ideas with better alternatives
+- **Context-First**: Stack-agnostic until code is read, adapts to project conventions
+- **Adaptive Memory Bank**: Uses docs/AI_CONTEXT.md for project knowledge
+- **TDD-First Protocol**: Red-Green-Refactor methodology
+- **Preferred CLI Tools**: bat, rg (ripgrep), sd for precision
+- **Agent Delegation**: Multi-agent orchestration system
+- **Structured Handoff**: Conventional commits and changelog updates
 
 ### Custom Agents
 
@@ -314,10 +388,11 @@ Created based on experience with OpenCode and software development best practice
 
 ## Quick Navigation
 
+- [Global Configuration Guide](GLOBAL_CONFIG.md)
+- [Getting Started](GETTING_STARTED.md)
+- [Example Usage](EXAMPLES.md)
+- [Contributing](CONTRIBUTING.md)
 - [Main Agent Config](.github/agents/AGENTS.md)
-- [Custom Agents](.github/agents/)
-- [Sub-Agents](.github/agents/sub-agents/)
-- [Skills](.github/agents/skills/)
-- [Commands](.github/agents/commands/)
+- [Quick Reference Index](.github/agents/INDEX.md)
 
 **Happy Coding! 🚀**

@@ -13,16 +13,18 @@ Quick reference guide to all available agents, skills, and commands.
 ## Main Configuration
 
 ### [AGENTS.md](AGENTS.md)
-Core agent behavior, principles, and workflows.
+Core agent behavior as Principal Software Architect with context-first approach.
 
 **Key Topics:**
-- Core principles (minimal changes, test-driven, security first)
-- Agent capabilities (analysis, development, validation)
-- Workflow (understand → plan → implement → validate → review)
-- Tool usage guidelines
-- Best practices
+- Role & Persona (Anti-sycophancy, Context-First, Orchestrator)
+- Adaptive Project & Memory Bank (docs/AI_CONTEXT.md)
+- Pre-flight Safety & Simplicity Checks
+- Preferred CLI Tools (bat, rg, sd)
+- TDD-First Execution Protocol
+- Agent Delegation & Specialization
+- Commit & Handoff procedures
 
-**Use When:** Setting up new projects or onboarding team members
+**Use When:** Setting up new projects, understanding agent philosophy, or onboarding team members
 
 ---
 
