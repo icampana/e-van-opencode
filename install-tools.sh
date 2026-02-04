@@ -3,8 +3,9 @@
 # OpenCode Tools Installer
 # Installs recommended CLI tools: bat, ripgrep (rg), sd, eza
 # Supports: macOS (brew), Ubuntu/Debian (apt), Fedora/RHEL (dnf), Arch (pacman)
+# Usage: ./install-tools.sh [--dry-run]
 
-set -e
+set -euo pipefail
 
 # Colors for output
 RED='\033[0;31m'
@@ -41,7 +42,7 @@ detect_os() {
         OS="macos"
         PKG_MANAGER="brew"
     elif [[ -f /etc/os-release ]]; then
-        . /etc/os-release
+        source /etc/os-release
         case "$ID" in
             ubuntu|debian)
                 OS="debian"
@@ -144,21 +145,22 @@ install_bat() {
 
     case "$OS" in
         macos)
-            install_package "bat" "bat"
+            install_package "bat"
             ;;
         debian)
             # On Ubuntu/Debian, the package might be called 'batcat'
             if ! command_exists bat && ! command_exists batcat; then
-                install_package "bat" "bat"
+                install_package "bat"
             fi
             # Create symlink if batcat exists but bat doesn't
             if command_exists batcat && ! command_exists bat; then
                 log_info "Creating symlink: bat -> batcat"
-                sudo ln -sf "$(which batcat)" /usr/local/bin/bat
+                sudo mkdir -p /usr/local/bin
+                sudo ln -sf "$(command -v batcat)" /usr/local/bin/bat
             fi
             ;;
         *)
-            install_package "bat" "bat"
+            install_package "bat"
             ;;
     esac
 }
@@ -166,7 +168,7 @@ install_bat() {
 # Install ripgrep
 install_ripgrep() {
     log_info "Installing ripgrep..."
-    install_package "rg" "ripgrep"
+    install_package "rg"
 }
 
 # Install sd
@@ -175,14 +177,19 @@ install_sd() {
 
     case "$OS" in
         macos|debian|arch)
-            install_package "sd" "sd"
+            install_package "sd"
             ;;
         fedora)
             # sd might not be in default repos, try cargo
-            if ! install_package "sd" "sd"; then
+            if ! install_package "sd"; then
                 log_warning "sd not found in repos, attempting to install via cargo..."
                 if command_exists cargo; then
-                    cargo install sd
+                    if cargo install sd && command_exists sd; then
+                        log_success "sd installed via cargo"
+                    else
+                        log_error "Failed to install sd via cargo"
+                        return 1
+                    fi
                 else
                     log_error "cargo not found. Install Rust from https://rustup.rs/ and run: cargo install sd"
                     return 1
@@ -190,7 +197,7 @@ install_sd() {
             fi
             ;;
         *)
-            install_package "sd" "sd"
+            install_package "sd"
             ;;
     esac
 }
@@ -201,38 +208,57 @@ install_eza() {
 
     case "$OS" in
         macos)
-            install_package "eza" "eza"
+            install_package "eza"
             ;;
         debian)
-            # eza might not be in default Ubuntu repos
-            if ! install_package "eza" "eza"; then
-                log_warning "eza not found in default repos"
-                log_info "For Ubuntu 22.04+, you can install via:"
-                echo "  sudo mkdir -p /etc/apt/keyrings"
-                echo "  wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg"
-                echo "  echo \"deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main\" | sudo tee /etc/apt/sources.list.d/gierens.list"
-                echo "  sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list"
-                echo "  sudo apt update && sudo apt install eza"
-                log_info "Or install via cargo: cargo install eza"
+            # eza might not be in default Ubuntu repos, try adding the eza PPA
+            if ! command_exists eza; then
+                if ! install_package "eza"; then
+                    log_warning "eza not found in default repos, attempting to install via eza PPA..."
+                    log_info "Adding eza repository..."
+                    sudo mkdir -p /etc/apt/keyrings
+                    if wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg 2>/dev/null; then
+                        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
+                        sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+                        sudo apt update -qq
+                        if install_package "eza"; then
+                            log_success "eza installed via PPA"
+                        else
+                            log_error "Failed to install eza via PPA"
+                            return 1
+                        fi
+                    else
+                        log_error "Failed to add eza repository"
+                        log_info "Try installing via cargo: cargo install eza"
+                        return 1
+                    fi
+                fi
             fi
             ;;
         arch)
-            install_package "eza" "eza"
+            install_package "eza"
             ;;
         fedora)
             # eza might need cargo installation
-            if ! install_package "eza" "eza"; then
-                log_warning "eza not found in repos, attempting to install via cargo..."
-                if command_exists cargo; then
-                    cargo install eza
-                else
-                    log_error "cargo not found. Install Rust from https://rustup.rs/ and run: cargo install eza"
-                    return 1
+            if ! command_exists eza; then
+                if ! install_package "eza"; then
+                    log_warning "eza not found in repos, attempting to install via cargo..."
+                    if command_exists cargo; then
+                        if cargo install eza && command_exists eza; then
+                            log_success "eza installed via cargo"
+                        else
+                            log_error "Failed to install eza via cargo"
+                            return 1
+                        fi
+                    else
+                        log_error "cargo not found. Install Rust from https://rustup.rs/ and run: cargo install eza"
+                        return 1
+                    fi
                 fi
             fi
             ;;
         *)
-            install_package "eza" "eza"
+            install_package "eza"
             ;;
     esac
 }
@@ -293,7 +319,7 @@ main() {
     echo "================================================"
     echo ""
 
-    log_info "Tools are ready to use! See .github/agents/AGENTS.md for usage."
+    log_info "Tools are ready to use! See docs/AGENTS.md for usage."
     echo ""
     echo "Quick examples:"
     echo "  bat -p file.txt          # View file with syntax highlighting"
