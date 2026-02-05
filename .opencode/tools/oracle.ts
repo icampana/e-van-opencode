@@ -19,22 +19,10 @@ export const capture = tool({
   async execute(args, context) {
     const snapshotPath = path.join(context.directory, args.snapshotName);
     
-    // In a real implementation, this tool might instrument the code or 
-    // rely on a specific test runner wrapper to capture outputs.
-    // For now, we simulate the 'Lock' phase by ensuring the command runs.
-    
     try {
-      // Execute the capture command
-      // We assume the runCommand is configured to write to the snapshotPath
       const result = await Bun.$`${args.runCommand}`.text();
-      
-      // Verify snapshot was created
       await fs.access(snapshotPath);
-      
-      return `Snapshot captured successfully for ${args.functionName} and saved to ${args.snapshotName}.
-
-Output:
-${result}`;
+      return `Snapshot captured successfully for ${args.functionName} and saved to ${args.snapshotName}.\n\nOutput:\n${result}`;
     } catch (error) {
       return `Failed to capture snapshot: ${error.message}`;
     }
@@ -53,10 +41,7 @@ export const verify = tool({
     try {
       await fs.access(snapshotPath);
       const result = await Bun.$`${args.runCommand}`.text();
-      return `Verification completed.
-
-Output:
-${result}`;
+      return `Verification completed.\n\nOutput:\n${result}`;
     } catch (error) {
       return `Verification failed or snapshot missing: ${error.message}`;
     }
