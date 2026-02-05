@@ -10,9 +10,11 @@ The "Automated Regression Oracle" uses the current version of the software as th
 ## Workflow
 
 1.  **Capture**: Identify the function to be modified. Generate a "Snapshot Test" (or "Characterization Test") that records the output of the function for a diverse set of inputs (randomized fuzzing or captured production traffic).
+    *   **Action**: Use the `oracle_capture` tool to run the capture command and lock the behavior.
 2.  **Lock**: Save these outputs to a temporary file (e.g., `oracle_snapshot.json`).
 3.  **Modify**: Perform the refactoring or optimization.
-4.  **Verify**: Run the Snapshot Test against the new code. Compare the new output to the `oracle_snapshot.json`. Any deviation is a failure.
+4.  **Verify**: Run the Snapshot Test against the new code.
+    *   **Action**: Use the `oracle_verify` tool to compare the new output to the `oracle_snapshot.json`. Any deviation is a failure.
 5.  **Release**: Only if the verification passes, delete the snapshot and commit the changes.
 
 ## When to use
