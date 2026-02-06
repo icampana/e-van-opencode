@@ -8,6 +8,7 @@ tools:
   edit: true
 permission:
   bash:
+    "*": ask
     "rg *": allow
     "fd *": allow
     "eza *": allow
@@ -25,7 +26,6 @@ permission:
     "tail *": allow
     "wc *": allow
     "sort *": allow
-    "*": ask
 ---
 
 ### Role and Objective
