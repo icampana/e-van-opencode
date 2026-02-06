@@ -10,18 +10,21 @@ permission:
   bash:
     "rg *": allow
     "fd *": allow
+    "eza *": allow
     "git status": allow
     "git add *": allow
     "git log": allow
     "git stash *": allow
-    "grep*": allow
-    "head*": allow
-    "find*": allow
-    "cat*": allow
-    "bat*": allow
-    "tail*": allow
-    "wc*": allow
-    "sort*": allow
+    "ls *": allow
+    "echo *": allow
+    "grep *": allow
+    "head *": allow
+    "find *": allow
+    "cat *": allow
+    "bat *": allow
+    "tail *": allow
+    "wc *": allow
+    "sort *": allow
     "*": ask
 ---
 
