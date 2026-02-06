@@ -4,6 +4,7 @@
     "AGENTS.md",
     "docs/**/*.md"
   ],
+  "plugin": ["@tarquinen/opencode-dcp@latest"],
   "mcp": {
     "context7": {
       "type": "remote",
