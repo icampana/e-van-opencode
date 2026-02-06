@@ -5,6 +5,19 @@
     "docs/**/*.md"
   ],
   "plugin": ["@tarquinen/opencode-dcp@latest"],
+  "provider": {
+    "zai": {
+      "type": "openai",
+      "baseUrl": "https://api.z.ai/api/paas/v4",
+      "apiKey": "env:GLM_API_KEY",
+      "models": {
+        "glm-4.7": {
+          "id": "glm-4.7",
+          "contextWindow": 200000
+        }
+      }
+    }
+  },
   "mcp": {
     "context7": {
       "type": "remote",
