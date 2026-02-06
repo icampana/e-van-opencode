@@ -57,6 +57,18 @@ backup_existing() {
             mkdir -p "$BACKUP_DIR/agents"
             cp -r "$CONFIG_DIR/agents/"* "$BACKUP_DIR/agents/"
         fi
+
+        # Backup skills directory if it exists
+        if [ -d "$CONFIG_DIR/skills" ]; then
+            mkdir -p "$BACKUP_DIR/skills"
+            cp -r "$CONFIG_DIR/skills/"* "$BACKUP_DIR/skills/"
+        fi
+
+        # Backup tools directory if it exists
+        if [ -d "$CONFIG_DIR/tools" ]; then
+            mkdir -p "$BACKUP_DIR/tools"
+            cp -r "$CONFIG_DIR/tools/"* "$BACKUP_DIR/tools/"
+        fi
         
         log_success "Backup created: $BACKUP_DIR"
     fi
@@ -90,6 +102,20 @@ sync_copy() {
         done
         log_success "Synced $count agents"
     fi
+
+    # Copy skills
+    if [ -d "$REPO_DIR/.opencode/skills" ]; then
+        mkdir -p "$CONFIG_DIR/skills"
+        cp -r "$REPO_DIR/.opencode/skills/"* "$CONFIG_DIR/skills/"
+        log_success "Synced skills"
+    fi
+
+    # Copy tools
+    if [ -d "$REPO_DIR/.opencode/tools" ]; then
+        mkdir -p "$CONFIG_DIR/tools"
+        cp -r "$REPO_DIR/.opencode/tools/"* "$CONFIG_DIR/tools/"
+        log_success "Synced tools"
+    fi
 }
 
 # Symlink Mode: Links specific files, preserves others in directory
@@ -114,6 +140,33 @@ sync_symlink() {
             ((count++))
         done
         log_success "Linked $count agents"
+    fi
+
+    # Link skills
+    if [ -d "$REPO_DIR/.opencode/skills" ]; then
+        mkdir -p "$CONFIG_DIR/skills"
+        for skill_dir in "$REPO_DIR/.opencode/skills"/*; do
+            [ -d "$skill_dir" ] || continue
+            skill_name=$(basename "$skill_dir")
+            mkdir -p "$CONFIG_DIR/skills/$skill_name"
+            for skill_file in "$skill_dir"/*; do
+                [ -e "$skill_file" ] || continue
+                filename=$(basename "$skill_file")
+                ln -sf "$skill_file" "$CONFIG_DIR/skills/$skill_name/$filename"
+            done
+        done
+        log_success "Linked skills"
+    fi
+
+    # Link tools
+    if [ -d "$REPO_DIR/.opencode/tools" ]; then
+        mkdir -p "$CONFIG_DIR/tools"
+        for tool in "$REPO_DIR/.opencode/tools"/*; do
+            [ -e "$tool" ] || continue
+            filename=$(basename "$tool")
+            ln -sf "$tool" "$CONFIG_DIR/tools/$filename"
+        done
+        log_success "Linked tools"
     fi
     
     log_success "Symlinks created/updated"
