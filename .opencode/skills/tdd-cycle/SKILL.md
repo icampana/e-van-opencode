@@ -35,3 +35,8 @@ When this skill is active, you must announce your current phase (e.g., "Phase: R
 
 Example:
 `tdd({ phase: "RED", action: "Verifying failing test", status: "SUCCESS" })`
+
+## Critical Reliability Protocol
+1. **Chain of Thought**: Before running any tool, you must output a `<thought>` block explaining exactly what the tool will check.
+2. **No Hallucinated Success**: You are FORBIDDEN from assuming a test passed. You must explicitly read the exit code of the terminal command.
+3. **Double Check**: If you edit a file, you must immediately run `cat` on it to verify the edit applied correctly before moving on.
