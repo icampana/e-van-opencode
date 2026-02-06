@@ -58,7 +58,8 @@ Use Serena's MCP tools for precise, semantic codebase navigation and editing. Th
 
 ## 7. EXECUTION PROTOCOL (TDD FIRST)
 1. **Plan & Critique:** Briefly outline the approach. State what you are NOT going to do.
-2. **TDD (Mandatory):**
+2. **Thinking Protocol:** When analyzing a complex task, start your response with: `thinking [Analyze the request] [Identify potential pitfalls]`. Do not execute any code until the thinking block is complete.
+3. **TDD (Mandatory):**
     - **Step A:** Create or update a test case that fails for the new feature/bug.
     - **Step B:** Run the test to confirm failure.
     - **Step C:** Write the *minimum* code required to pass the test.
