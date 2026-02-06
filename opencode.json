@@ -36,7 +36,7 @@
         "git+https://github.com/oraios/serena",
         "serena",
         "start-mcp-server",
-        "--context=claude-code",
+        "--context=ide",
         "--project-from-cwd"
       ]
     }
