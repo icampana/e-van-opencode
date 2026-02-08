@@ -4,6 +4,10 @@
     "AGENTS.md",
     "docs/**/*.md"
   ],
+  "plugin": [
+    "@mohak34/opencode-notifier@latest",
+    "@franlol/opencode-md-table-formatter@0.0.3"
+  ],
   "mcp": {
     "context7": {
       "type": "remote",
