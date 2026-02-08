@@ -32,7 +32,7 @@
         "@modelcontextprotocol/server-sequential-thinking"
       ]
     },
-    "oraios/serena": {
+    "serena": {
       "type": "local",
       "command": [
         "uvx",
