@@ -12,8 +12,9 @@ permission:
     "rg *": allow
     "fd *": allow
     "eza *": allow
-    "git status": allow
+    "git status *": allow
     "git add *": allow
+    "git diff *": allow
     "git log": allow
     "git stash *": allow
     "ls *": allow
