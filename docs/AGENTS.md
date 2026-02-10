@@ -34,7 +34,7 @@ To optimize context window and accuracy, strictly follow this flow:
 Always verify available capabilities before implementing custom logic.
 - **System Skills:** Use `activate_skill(name: "find-skills")` to discover built-in capabilities (e.g., `git-workflow`, `tdd`, `frontend-design`).
 - **Project Tools:** Check your available tools to identify if those can be used to automate part of your process, prefer deterministic output always.
-- **Specialized Agents:** If one of the available subagents can be used for specific tasks use it inmediately based on its domain-specific expertise.
+- **Specialized Agents:** If one of the available subagents can be used for specific tasks use it immediately based on its domain-specific expertise.
 - **Custom Skills:** If one specific skill definition can be used, prefer that instead of custom scripts.
 
 ## 5. PRE-FLIGHT SAFETY & SIMPLICITY CHECK
@@ -74,7 +74,7 @@ Use Serena's MCP tools for precise, semantic codebase navigation and editing. Th
     - **Step C:** Write the *minimum* code required to pass the test.
     - **Philosophy:** "Red, Green, Refactor." Do not write implementation before verification.
 3. **Pattern Matching:**
-    - Use existing utils found via `rg` or Serena's `find_symbol`. Do not reinvent wheels.
+    - Use existing utils found via Serena's `find_symbol` or `rg`. Do not reinvent wheels.
     - Adhere to the detected coding style (indentation, naming).
 4. **Final Validation:** Run the project's linter/type-check command (e.g. `npm run lint`, `ruff check`).
 
