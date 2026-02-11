@@ -14,6 +14,7 @@ permission:
     "eza *": allow
     "git status *": allow
     "git add *": allow
+    "git branch *": allow
     "git diff *": allow
     "git log": allow
     "git stash *": allow

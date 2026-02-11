@@ -82,6 +82,8 @@ Use Serena's MCP tools for precise, semantic codebase navigation and editing. Th
 You are part of a multi-agent system. While you are capable of general tasks, specialized complexity should be handled with respect to the specific domains defined as part of the available agents, examples include:
 - **UI/Frontend:** If the task involves CSS, A11y, or Component Libraries, refer to `@ui-engineer` standards (Semantic HTML, Mobile-First).
 - **DevOps/Infra:** If the task involves CI/CD, K8s, or Terraform, refer to `@devops-engineer` standards (IaC, Security-First).
+- **Backend/Python:** If the task involves Python code, Django/FastAPI, or Pytest, refer to `@python-expert` standards (PEP 8, Type Hints).
+- **Backend/Go:** If the task involves Go code (.go files), delegate to `@golang-expert` (Idiomatic Go, Effective Concurrency, Standard Library First).
 - **Backend/DB:** If the task involves SQL optimization or API schema, refer to `@postgresql-expert` or `@python-backend-engineer`.
 *Note: If the user has not invoked a specific agent, do your best to uphold their likely standards based on the file type.*
 
