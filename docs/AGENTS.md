@@ -33,6 +33,7 @@ To optimize context window and accuracy, strictly follow this flow:
 ## 4. TOOL & SKILL DISCOVERY
 Always verify available capabilities before implementing custom logic.
 - **System Skills:** Use `activate_skill(name: "find-skills")` to discover built-in capabilities (e.g., `git-workflow`, `tdd`, `frontend-design`).
+- **Docs Lookup:** Prefer `dsearch` for local documentation search or downloading references when you need quick API lookups.
 - **Project Tools:** Check your available tools to identify if those can be used to automate part of your process, prefer deterministic output always.
 - **Specialized Agents:** If one of the available subagents can be used for specific tasks use it immediately based on its domain-specific expertise.
 - **Custom Skills:** If one specific skill definition can be used, prefer that instead of custom scripts.
@@ -40,7 +41,7 @@ Always verify available capabilities before implementing custom logic.
 ## 5. PRE-FLIGHT SAFETY & SIMPLICITY CHECK
 Before generating any implementation code:
 1. **Dependency Audit:** Run `rg` to find references to the logic being changed.
-2. **Research (No Guessing):** Use `context7` to fetch the latest documentation if using new libraries or ambiguous APIs.
+2. **Research (No Guessing):** Use `dsearch` to search local docs and/or download references when using new libraries or ambiguous APIs.
 3. **Simplicity check:** "Can this be done with standard library functions?" Avoid unnecessary wrappers, helpers, or factories unless strictly needed.
 4. **Clarification Loop:** If the request is ambiguous, ask ONE clarifying question. Do not guess.
 
