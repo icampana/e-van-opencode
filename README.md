@@ -63,6 +63,15 @@ e-van-opencode/
 - **Git:** Required for cloning and updating the repository
 - **Bash:** The sync script requires a bash-compatible shell
 
+### Recommended Skills
+
+Install these two skills for fast local documentation lookup:
+
+```bash
+npx skills add https://github.com/icampana/dsearch
+npx skills add https://github.com/firecrawl/cli --skill firecrawl
+```
+
 ### Installation
 
 #### 1. Clone the Repository
