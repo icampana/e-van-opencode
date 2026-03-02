@@ -44,7 +44,7 @@ detect_os() {
     elif [[ -f /etc/os-release ]]; then
         source /etc/os-release
         case "$ID" in
-            ubuntu|debian)
+            ubuntu|debian|linuxmint)
                 OS="debian"
                 PKG_MANAGER="apt"
                 ;;
@@ -95,7 +95,7 @@ check_package_manager() {
 # Install package based on OS
 install_package() {
     local package=$1
-    local pkg_name=$2  # Alternative package name if different
+    local pkg_name=${2:-} # Alternative package name if different
 
     if [ -z "$pkg_name" ]; then
         pkg_name=$package
@@ -148,11 +148,13 @@ install_bat() {
             install_package "bat"
             ;;
         debian)
-            # On Ubuntu/Debian, the package might be called 'batcat'
             if ! command_exists bat && ! command_exists batcat; then
-                install_package "bat"
+                # Install "bat" package, but the binary is called "batcat"
+                log_info "Installing bat package..."
+                sudo apt update -qq
+                sudo apt install -y bat
             fi
-            # Create symlink if batcat exists but bat doesn't
+            # Crear symlink si batcat existe pero bat no
             if command_exists batcat && ! command_exists bat; then
                 log_info "Creating symlink: bat -> batcat"
                 sudo mkdir -p /usr/local/bin
@@ -168,7 +170,7 @@ install_bat() {
 # Install ripgrep
 install_ripgrep() {
     log_info "Installing ripgrep..."
-    install_package "rg"
+    install_package "rg" "ripgrep"
 }
 
 # Install sd
