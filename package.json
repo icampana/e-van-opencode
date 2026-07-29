@@ -1,0 +1,24 @@
+{
+  "name": "@e-van/skills",
+  "version": "0.1.0",
+  "description": "Domain context, architecture scan, gauntlet, and project onboarding skills for OpenCode + Superpowers",
+  "type": "module",
+  "main": "./packages/skills/plugin.js",
+  "bin": {
+    "e-van-skills": "./packages/skills/bin/install.js"
+  },
+  "files": [
+    "packages/skills/**"
+  ],
+  "keywords": [
+    "opencode",
+    "skills",
+    "superpowers",
+    "tdd",
+    "architecture",
+    "ddd",
+    "evidence-first",
+    "domain-driven-design"
+  ],
+  "license": "MIT"
+}

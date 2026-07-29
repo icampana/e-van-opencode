@@ -6,28 +6,9 @@
   ],
   "plugin": [
     "@mohak34/opencode-notifier@latest",
-    "@franlol/opencode-md-table-formatter@0.0.3"
+    "@franlol/opencode-md-table-formatter@0.0.3",
+    "superpowers@git+https://github.com/obra/superpowers.git"
   ],
   "mcp": {
-    "sequentialthinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
-    },
-    "serena": {
-      "type": "local",
-      "command": [
-        "uvx",
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server",
-        "--context=ide",
-        "--project-from-cwd"
-      ]
-    }
   }
 }
