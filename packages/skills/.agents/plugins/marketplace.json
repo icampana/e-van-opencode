@@ -1,0 +1,20 @@
+{
+  "name": "e-van-skills",
+  "interface": {
+    "displayName": "@e-van/skills"
+  },
+  "plugins": [
+    {
+      "name": "e-van-skills",
+      "source": {
+        "source": "url",
+        "url": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

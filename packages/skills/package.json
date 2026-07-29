@@ -12,6 +12,8 @@
     "docs/**",
     "plugin.js",
     "bin/install.js",
+    ".claude-plugin/**",
+    ".agents/**",
     "README.md"
   ],
   "keywords": [

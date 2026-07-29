@@ -1,0 +1,20 @@
+{
+  "name": "e-van-skills",
+  "description": "Domain context, architecture scan, gauntlet, and project onboarding skills for Claude Code + Superpowers",
+  "version": "0.1.0",
+  "author": {
+    "name": "icampana"
+  },
+  "homepage": "https://github.com/icampana/e-van-opencode",
+  "repository": "https://github.com/icampana/e-van-opencode",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "tdd",
+    "architecture",
+    "ddd",
+    "evidence-first",
+    "domain-driven-design",
+    "workflows"
+  ]
+}

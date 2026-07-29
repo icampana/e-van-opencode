@@ -1,7 +1,7 @@
 # @e-van/skills
 
-Workflow skills for OpenCode + Superpowers: domain context, architecture
-scan, evidence-first development, and project onboarding.
+Workflow skills for OpenCode, Claude Code & Superpowers: domain context,
+architecture scan, evidence-first development, and project onboarding.
 
 ## Overview
 
@@ -46,7 +46,7 @@ architecture-scan  ──►  using-git-worktrees (superpowers)  ──►  test
   skills hand off to `brainstorming`, `writing-plans`, `using-git-worktrees`,
   and `test-driven-development`.
 
-Add to your `opencode.json`:
+**OpenCode** — add to your `opencode.json`:
 
 ```json
 {
@@ -54,6 +54,13 @@ Add to your `opencode.json`:
     "superpowers@git+https://github.com/obra/superpowers.git"
   ]
 }
+```
+
+**Claude Code** — install via marketplace:
+
+```
+/plugin marketplace add anthropics/claude-plugins-official
+/plugin install superpowers@claude-plugins-official
 ```
 
 ### Recommended
@@ -82,20 +89,42 @@ brew install gentleman-programming/tap/engram
 
 ### Option 1: npx CLI Installer (copies skills into project)
 
+The installer auto-detects your client (OpenCode, Claude Code, or
+`.agents/` cross-agent standard) based on which config directory exists.
+You can override with `--client`.
+
+**OpenCode (auto-detected if `.opencode/` exists):**
+
 ```bash
 npx @e-van/skills@git+https://github.com/icampana/e-van-opencode.git
 ```
 
-This copies the skill directories into `.opencode/skills/`. Skills become
-project-owned and customizable.
+Copies to `.opencode/skills/`.
+
+**Claude Code:**
+
+```bash
+npx @e-van/skills@git+https://github.com/icampana/e-van-opencode.git --client claude
+```
+
+Copies to `.claude/skills/`.
+
+**Cross-agent (`.agents/` — works with Claude Code, Cursor, Cline, etc.):**
+
+```bash
+npx @e-van/skills@git+https://github.com/icampana/e-van-opencode.git --client agents
+```
+
+Copies to `.agents/skills/`.
 
 Flags:
+- `--client <c>` — target client: `opencode`, `claude`, or `agents` (default: auto-detect)
 - `--force` — overwrite existing skill directories
 - `--list` — list available skills without installing
 - `--path <dir>` — target project root (default: cwd)
 - `--core-only` — skip the optional `project-onboarding` skill
 
-### Option 2: Opencode Plugin (auto-discover, zero copies)
+### Option 2: OpenCode Plugin (auto-discover, zero copies)
 
 Add to your `opencode.json`:
 
@@ -111,7 +140,16 @@ Add to your `opencode.json`:
 Skills stay in `node_modules` and auto-update on reinstall. They cannot be
 customized per-project.
 
-### Option 3: Symlink (for this repo)
+### Option 3: Claude Code Marketplace Plugin
+
+```
+/plugin marketplace add icampana/e-van-opencode
+/plugin install e-van-skills@e-van-skills
+```
+
+Skills stay in the plugin cache and auto-update on reinstall.
+
+### Option 4: Symlink (for this repo)
 
 Already configured via symlinks in `.opencode/skills/` pointing to
 `packages/skills/skills/*`. Use `sync-config.sh --symlink` to sync to

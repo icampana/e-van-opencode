@@ -1,0 +1,18 @@
+{
+  "name": "e-van-skills",
+  "description": "Domain context, architecture scan, gauntlet, and project onboarding skills for Claude Code + Superpowers",
+  "owner": {
+    "name": "icampana"
+  },
+  "plugins": [
+    {
+      "name": "e-van-skills",
+      "description": "Domain context, architecture scan, gauntlet, and project onboarding skills for Claude Code + Superpowers",
+      "version": "0.1.0",
+      "source": "./",
+      "author": {
+        "name": "icampana"
+      }
+    }
+  ]
+}

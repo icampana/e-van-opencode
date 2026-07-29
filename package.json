@@ -8,7 +8,9 @@
     "e-van-skills": "./packages/skills/bin/install.js"
   },
   "files": [
-    "packages/skills/**"
+    "packages/skills/**",
+    "packages/skills/.claude-plugin/**",
+    "packages/skills/.agents/**"
   ],
   "keywords": [
     "opencode",
