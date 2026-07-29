@@ -2,7 +2,7 @@
 
 # OpenCode Config Sync Script
 # Syncs this repository to ~/.config/opencode/
-# Safe for GSD: Preserves existing files in target directories.
+# Preserves existing files in target directories.
 
 set -e
 
@@ -220,7 +220,7 @@ main() {
     
     echo ""
     log_success "Configuration synced successfully!"
-    echo -e "${YELLOW}Note: External files (like GSD agents) in target directory were preserved.${NC}"
+    echo -e "${YELLOW}Note: External files in target directory were preserved.${NC}"
     echo ""
 }
 

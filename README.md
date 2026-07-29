@@ -13,15 +13,58 @@ OpenCode enables AI-powered development through configurable agents that underst
 - **Safe Updates:** Automatic backup of existing configurations before syncing
 - **Customizable:** Fork and adapt to your team's specific needs
 
-## ⚡ GSD Integration (New!)
+## ⚡ Superpowers Workflow
 
-This repository is optimized for use with **Get Shit Done (GSD)** (`npx get-shit-done-cc`), a powerful meta-prompting system for planning and executing complex tasks.
+This repository uses the [**Superpowers**](https://github.com/obra/superpowers) plugin as its primary development workflow. Superpowers ships a set of skills that enforce the golden rules — plan before you code, TDD, verify before done, and more.
 
-- **Unified Workflow:** Use GSD to plan and track tasks, while OpenCode experts execute the code.
-- **Context-Aware:** Agents are trained to respect GSD's atomic plans (`PLAN.md`).
-- **Safe Syncing:** The updated `sync-config.sh` ensures your GSD installation is preserved.
+A typical non-trivial task flows through these skills in order:
 
-[👉 **Read the GSD + OpenCode Workflow Guide**](docs/GSD_WORKFLOW.md)
+1. **`brainstorming`** — idea → agreed design/spec before any code
+2. **`writing-plans`** — spec → bite-sized, test-first implementation plan
+3. **`using-git-worktrees`** — isolate the work in its own branch
+4. **`subagent-driven-development`** — execute the plan task-by-task with review gates
+5. **`test-driven-development`** — red → green → refactor per task
+6. **`systematic-debugging`** — structured debugging on any bug or test failure
+7. **`premortem`** — surface failure modes before implementation and before merge
+8. **`requesting-code-review`** / **`receiving-code-review`** — adversarial review pass
+9. **`verification-before-completion`** — prove it works with real output before claiming done
+10. **`finishing-a-development-branch`** — merge, PR, or cleanup on purpose
+
+The `using-superpowers` skill loads at session start and routes to the right skill by name automatically. You rarely invoke them by hand.
+
+## 🧩 @e-van/skills Package
+
+This repository includes a distributable skills package (`packages/skills/`) with 4 workflow skills that extend superpowers and integrate the team's AI workflow guide best practices:
+
+| Skill | Tier | Description |
+|-------|------|-------------|
+| `building-domain-context` | Core | DDD ubiquitous language definition before brainstorming |
+| `architecture-scan` | Core | Tech debt detection (balls of mud, shallow modules, DRY violations) + TDD refactor handoff |
+| `running-the-gauntlet` | Core | Evidence-first development for high-stakes code (spec → TDD → 6-check gauntlet → EVIDENCE.md) |
+| `project-onboarding` | Optional | Project setup following the AI workflow guide (AGENTS.md, mise.toml, CodeGraph, Engram) |
+
+### Installation
+
+The skills package supports multiple AI coding clients:
+
+```bash
+# OpenCode (default — symlinks into .opencode/skills/)
+npx @e-van/skills@git+https://github.com/icampana/e-van-opencode.git
+
+# Claude Code
+npx @e-van/skills@git+https://github.com/icampana/e-van-opencode.git --client claude
+
+# Cross-agent (Cursor, Cline, etc. — installs to .agents/skills/)
+npx @e-van/skills@git+https://github.com/icampana/e-van-opencode.git --client agents
+```
+
+The installer auto-detects the client based on existing config directories. Additional flags:
+- `--force`: Overwrite existing skills
+- `--core-only`: Install only Core skills (skip optional)
+- `--list`: List available skills without installing
+- `--path <dir>`: Custom installation path
+
+[👉 **Read the skills package README**](packages/skills/README.md)
 
 ## 📋 Project Structure
 
@@ -39,6 +82,7 @@ e-van-opencode/
 │   │   ├── github-actions-expert.md
 │   │   ├── nextjs-expert.md
 │   │   ├── astro-expert.md
+│   │   ├── golang-expert.md
 │   │   ├── senior-code-reviewer.md
 │   │   ├── python-expert.md
 │   │   ├── javascript-expert.md
@@ -46,11 +90,20 @@ e-van-opencode/
 │   │   ├── test-writer.md
 │   │   ├── bug-hunter.md
 │   │   └── documentation-expert.md
+│   ├── skills/             # Custom skills (symlinks to packages/skills/)
 │   └── commands/           # Custom slash commands
 │       └── analyze-context.md
 ├── docs/
-│   └── AGENTS.md           # Main agent rules file
+│   ├── AGENTS.md           # Main agent rules file
+│   └── adr/               # Architecture Decision Records
+├── packages/
+│   └── skills/             # @e-van/skills distributable package
+│       ├── skills/         # Skill definitions (SKILL.md)
+│       ├── bin/            # npx CLI installer
+│       ├── docs/           # Reference docs (golden-rules, tools-reference)
+│       └── plugin.js       # OpenCode plugin
 ├── opencode.json           # OpenCode configuration
+├── package.json            # Root package (git-based npx + plugin install)
 ├── sync-config.sh          # Sync script for ~/.config/opencode/
 └── README.md
 ```
@@ -71,6 +124,8 @@ Install these two skills for fast local documentation lookup:
 npx skills add https://github.com/icampana/dsearch
 npx skills add https://github.com/firecrawl/cli --skill firecrawl
 ```
+
+Additionally, this repo ships its own skills package (`@e-van/skills`) with workflow skills for DDD, architecture scanning, evidence-first development, and project onboarding. See the [🧩 @e-van/skills Package](#-e-vanskills-package) section below for installation instructions.
 
 ### Installation
 
@@ -187,7 +242,7 @@ Display help information:
 
 ## 🤖 Available Agents
 
-This repository includes 18 specialized agents, each designed for specific development tasks. Agents are categorized as **primary** (main decision-makers) or **subagent** (specialized assistants).
+This repository includes 19 specialized agents, each designed for specific development tasks. Agents are categorized as **primary** (main decision-makers) or **subagent** (specialized assistants).
 
 | Agent | Mode | Description | Use Case |
 |-------|------|-------------|----------|
@@ -197,6 +252,7 @@ This repository includes 18 specialized agents, each designed for specific devel
 | `devops-engineer` | primary | CI/CD, infrastructure automation (Terraform/Ansible), and cloud operations | Infrastructure as code, deployment pipelines |
 | `nextjs-expert` | primary | Next.js, React, Server Components, and App Router architecture | Next.js applications, React Server Components |
 | `astro-expert` | primary | Astro, component architecture, content collections, and static site optimization | Static sites, content-focused web applications |
+| `golang-expert` | primary | Idiomatic Go development, effective concurrency, and standard library first approach | Go services, CLI tools, concurrent systems |
 | `postgresql-expert` | subagent | PostgreSQL, SQL optimization, schema design, and database performance | Database design, query optimization, migrations |
 | `security-reviewer` | subagent | OWASP-focused security audit. Identifies, rates, and provides fixes for vulnerabilities | Security reviews, vulnerability scanning |
 | `docker-expert` | subagent | Docker containerization, Dockerfiles, Compose, and orchestration | Containerizing applications, Docker configuration |
